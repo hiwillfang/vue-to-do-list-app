@@ -1,7 +1,7 @@
 {
-  "name": "vue-todo",
+  "name": "vue-skills-list",
   "version": "1.0.0",
-  "description": "Simple Vue.js 2 To Do List",
+  "description": "Simple Vue.js 2 Skills List App",
   "author": "Will Fang <will@hiwillfang.com>",
   "private": true,
   "scripts": {
