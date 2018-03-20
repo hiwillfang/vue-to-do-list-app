@@ -1,12 +1,17 @@
 <template>
-  <div class="hello">
+  <div class="container">
+    <div class="hello">
     <div class="holder">
-      <ul>
-        <li v-for="(data, index) in skills" :key='index'>{{ data.skill }}</li>
-      </ul>
-
+    <form @submit.prevent="addSkill">
+      <input type="text" placeholder="Enter a skill you have.." v-model="skill" v-validate="'min:3'" name="skill">
+      <p class="alert" v-if="errors.has('skill')">{{ errors.first('skill') }}</p>
+    </form>
+    <ul>
+      <li v-for="(data, index) in skills" :key='index'>{{ data.skill }}</li>
+    </ul>
       <p>Here's a list of my technical skills!</p>
     </div>
+  </div>
   </div>
 </template>
 
@@ -15,13 +20,24 @@ export default {
   name: 'skills',
   data () {
     return {
+      skill: '',
       skills: [
         { 'skill': 'Vue.js' },
+        { 'skill': 'Angular' },
         { 'skill': 'PHP' }
-      ],
-      bgColor: 'blue',
-      bgWidth: '100%',
-      bgHeight: '50px'
+      ]
+    }
+  },
+  methods: {
+    addSkill () {
+      this.$validator.validateAll().then((result) => {
+        if (result) {
+          this.skills.push({skill: this.skill})
+          this.skill = ''
+        } else {
+          console.log('Not Valid')
+        }
+      })
     }
   }
 }
@@ -52,5 +68,20 @@ export default {
   }
   .container {
     box-shadow: 0px 0px 40px lightgray;
+  }
+  input {
+    width: calc(100% - 40px);
+    border: 0;
+    padding: 20px;
+    font-size: 1.3em;
+    background-color: #323333;
+    color: #687F7F;
+  }
+  .alert {
+    background: #fdf2ce;
+    font-weight: bold;
+    display: inline-block;
+    padding: 5px;
+    margin-top: -20px;
   }
 </style>
